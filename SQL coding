@@ -1,0 +1,92 @@
+use [CamPhoenix_Rpt]
+
+/*
+Author: Amber Deabenderfer
+Purpose: Pull all completed work beginning 01/01/2021 to current for dept 83
+*/
+
+select 
+OP.Full_Name,
+TM.Full_Name as 'Manager',
+WF.Workflow_Description,
+WI.Work_ID,
+WI.Work_Policy_Number as 'Claim Number',
+WI.Work_Subject,
+WI.Work_Description,
+WI.Work_Assigned_Datetime,
+WI.Work_Original_Datetime,
+WI.Work_Pulled_Flag,
+WI.Work_Follow_Up_Flag,
+WI.Work_Completed_Datetime,
+WI.Comments,
+WI.Completed_Out_of_sla_days,
+WI.Hyperlink,
+EM.From_Address,
+EM.To_Address,
+EM.Subject,
+EM.Email_Message,
+EM.Sent_At,
+EM.CC_Address,
+EM.Hyperlink as 'Outgoing attachment',
+CAT.Category_Value as 'Category'
+
+/*** Merge tables for items over 90 days.***/
+from [dbo].[PH_Work_Item_Closed] WI 
+	LEFT JOIN [dbo].[PH_Operator] OP ON WI.[Work_Assigned_To_Operator_ID] = OP.[Operator_ID]
+	LEFT JOIN [dbo].[PH_Work_item_Email] Email ON WI.[Work_ID] = Email.[Work_ID]
+	LEFT JOIN [dbo].[PH_Workflow] WF ON WI.[Workflow_ID] = WF.[Workflow_ID]
+	LEFT JOIN [dbo].[PH_Team_Manager] TM ON OP.[Team_Manager_ID] = TM.[Team_Manager_ID]
+	LEFT JOIN [dbo].[PH_Email_Data] EM ON WI.[Work_ID] = EM.[Work_ID]
+	LEFT JOIN [dbo].[PH_Workflow_Category] CAT ON WI.[Category_ID] = CAT.[Category_ID]
+
+where  
+	OP.Department_ID = 83
+	AND Work_Create_Datetime >= '01/01/2021'
+	AND Work_Completed_Flag = 'True'
+
+/*
+Append Under 90 day items with Over 90 day items
+*/
+UNION ALL
+
+select 
+OP.Full_Name,
+TM.Full_Name as 'Manager',
+WF.Workflow_Description,
+WI.Work_ID,
+WI.Work_Policy_Number as 'Claim Number',
+WI.Work_Subject,
+WI.Work_Description,
+WI.Work_Assigned_Datetime,
+WI.Work_Original_Datetime,
+WI.Work_Pulled_Flag,
+WI.Work_Follow_Up_Flag,
+WI.Work_Completed_Datetime,
+WI.Comments,
+WI.Completed_Out_of_sla_days,
+WI.Hyperlink,
+EM.From_Address,
+EM.To_Address,
+EM.Subject,
+EM.Email_Message,
+EM.Sent_At,
+EM.CC_Address,
+EM.Hyperlink as 'Outgoing attachment',
+CAT.Category_Value as 'Category'
+
+/* 
+Merge tables for items within last 90 days 
+*/
+from [dbo].[PH_Work_Item] WI 
+	LEFT JOIN [dbo].[PH_Operator] OP ON WI.[Work_Assigned_To_Operator_ID] = OP.[Operator_ID]
+	LEFT JOIN [dbo].[PH_Workflow] WF ON WI.[Workflow_ID] = WF.[Workflow_ID]
+	LEFT JOIN [dbo].[PH_Team_Manager] TM ON OP.[Team_Manager_ID] = TM.[Team_Manager_ID]
+	LEFT JOIN [dbo].[PH_Email_Data] EM ON WI.[Work_ID] = EM.[Work_ID]
+	LEFT JOIN [dbo].[PH_Workflow_Category] CAT ON WI.[Category_ID] = CAT.[Category_ID]
+
+where  
+	OP.Department_ID = 83
+	AND Work_Create_Datetime >= '01/01/2021'
+	AND Work_Completed_Flag = 'True'
+
+order by Work_Completed_Datetime
