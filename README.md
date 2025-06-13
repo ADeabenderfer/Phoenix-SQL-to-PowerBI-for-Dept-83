@@ -1,16 +1,17 @@
 # Phoenix-SQL-to-PowerBI-for-Dept-83
 Queue work stored in SQL displayed in PowerBI Reporting
 
-Existing data availability:
-- Restricted to past 90 days
-- Available in Excel format only
-- Not dynamic
-- Processing time to pull data and format into manager presentaion apprx 30 mins
-- Any other data needed required contacting Phoenix Product owner for SQL coding/reporting
+Existing Phoenix in-program data availability/issue:
+- Limited to past 90 days
+- Only available in Excel format
+- Processing time to pull data and format into manager presentation: apprx 30 mins
+- Additional data required contacting the Phoenix Product owner for SQL coding/report
+-     Took time and effort away from their primary duties and not feasible on a regular basis.
 
 Actions taken:
-- Learned SQL and created code to pull all data begining 01/01/2021 - Dept 83 began using Phoenix
-- Implemented auto-refresh within PowerBI to ensure more dynamic reporting
+- Obtained access and Learned SQL via online tutorials
+- Created code to pull all data from when the dept began using Phoenix
+- Set up in PowerBI with auto-refresh for Dynamic manager review. 
 
 Note: This was created within the last 30 days of employment in this job role. 
-Due to this, it was only one of the few reporting attempts within SQL/PowerBI due to job related permissions.
+Due to this, I was not able to improve the code or reporting views further.
