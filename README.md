@@ -12,5 +12,5 @@ Actions taken:
 - Learned SQL and created code to pull all data begining 01/01/2021 - Dept 83 began using Phoenix
 - Implemented auto-refresh within PowerBI to ensure more dynamic reporting
 
-Note: This was created and submitted within the last 30 days of employment in this department. 
-Due to this, it was my first and only attempt with SQL and PowerBI due to job related permissions.
+Note: This was created within the last 30 days of employment in this job role. 
+Due to this, it was only one of the few reporting attempts within SQL/PowerBI due to job related permissions.
